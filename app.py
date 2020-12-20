@@ -19,7 +19,10 @@ def index():
 
 @app.route("/api")
 def api():
-    arr = random.sample(range(1, 35), 30)
-    data = insertionsort(arr)
+    arr = random.sample(range(1, 31), 30)
+    data = selectionsort(arr)
     print(data)
     return data
+
+if __name__ == "__main__":
+    app.run(debug=True)
