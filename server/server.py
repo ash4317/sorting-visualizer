@@ -7,7 +7,7 @@ from algos.insertionsort import insertionsort
 #from quicksort import main
 import random
 
-app = Flask(__name__, template_folder="../client/templates", static_folder="../client/static")
+app = Flask(__name__, template_folder="../client/templates")
 
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -17,7 +17,7 @@ Session(app)
 def index():
     return render_template("index.htm")
 
-@app.route("/<algo>/<n>")
+@app.route("/<algo>/<n>", methods=["POST"])
 def api(algo, n):
     n = int(n)
     arr = random.sample(range(1, n + 1), n)

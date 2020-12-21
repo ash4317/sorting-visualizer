@@ -22,66 +22,140 @@
                 sort_btn = document.getElementById('perform');
 
                 sort_btn.onclick = () => {
-                    var choose_algo = Boolean(document.getElementById("algo").value != "none");
-                    var choose_no = Boolean(document.getElementById("elements").value != "none");
+                    var choose_algo = Boolean(document.getElementById("algo").value != "none"); // whether algo is chosen
+                    var choose_no = Boolean(document.getElementById("elements").value != "none"); // whether array size is chosen
+
                     if(!(choose_algo && choose_no)) {
+                        // if any one is not chosen, alert
                         alert("Select an algorithm and array size");
                     }
                     else {
-                        //alert(document.getElementById("algo").value);
-                        var algo = document.getElementById("algo").value;
-                        var n = document.getElementById("elements").value;
+                        // if both are chosen
+
+                        var algo = document.getElementById("algo").value; // get algo chosen
+                        var n = Number(document.getElementById("elements").value); // get array size chosen
                         alert("Algo chosen : " + algo + "\nArray size : " + n);
+                        
+                        // XHR object
                         var api_call = new XMLHttpRequest();
-
                         var url = `http://127.0.0.1:5000/${algo}/${n}`;
-                        /*
-                        function fun(data) {
-                            for(var i = 1; i <= 10; i++) {
-                                document.querySelector('.response').innerHTML += data[i] + '<br>';
-                            }
-                        }
-                        */
 
-                        function draw_settings(x, y, width, height, color) {
-                            // rectangle settings
+
+                        function draw_settings(x, y, width, height, height_multiplier, color) {
+                            // bar settings
                             ctx.beginPath();
-                            ctx.rect(40 + 15 * x, y, width, 20 * height);
+                            ctx.rect(40 + (width + 5) * x, y, width, height_multiplier * height);
                             ctx.fillStyle = color;
                             ctx.fill();
                         }
 
-                        function draw(arr) {
-                            // draw all rectangles representing the array
-                            for(var i = 0; i < arr.length - 2; i++) {
-                                draw_settings(i, 40, 10, arr[i], "white");
+
+                        function get_ht_multiplier(n) {
+                            // height multiplier of the bars
+                            switch(n) {
+                                case 25: return 30;
+                                case 50: return 15;
+                                case 75: return 9;
+                                case 100: return 8;
                             }
-                            draw_settings(arr[arr.length - 2], 40, 10, arr[arr[arr.length - 2]], "yellow");
-                            draw_settings(arr[arr.length - 1], 40, 10, arr[arr[arr.length - 1]], "red");
                         }
+
+
+                        function draw(arr) {
+                            // draw all bars representing the array
+
+                            let bar_width = Math.floor((c.width - 75 - 5*n)/n);
+                            var height_multiplier = get_ht_multiplier(n);
+                            
+                            // draw all the bars representing the array
+                            for(var i = 0; i < arr.length - 2; i++) {
+                                draw_settings(i, 40, bar_width, arr[i], height_multiplier, "white");
+                            }
+                            // last two elements of array are the indices that are to be swapped. Color of swapping elements = yellow, red
+                            draw_settings(arr[arr.length - 2], 40, bar_width, arr[arr[arr.length - 2]], height_multiplier, "yellow");
+                            draw_settings(arr[arr.length - 1], 40, bar_width, arr[arr[arr.length - 1]], height_multiplier, "red");
+                        }
+
 
                         function clear_canvas() {
                             // clear the canvas every time an array is drawn
                             ctx.clearRect(0, 0, c.width, c.height);
                         }
 
-                        function fun(data) {
-                            /*
-                                bubble sort - time = 10 * i
-                                insertion sort - time = 40 * i
-                                selection sort - time = 100 * i
-                            */
-                           var speed = 0;
-                           if(algo == "bubble") {
-                               speed = 10;
-                           }
-                           else if(algo == "selection") {
-                               speed = 100;
+
+                        function start(data) {
+                            // function to be executed after getting response from server
+                            var speed = 0;
+
+                            // set speeds of sorting algos according to array size
+                            if(algo == "bubble") {
+                               /*
+                                    n = 25, speed = 10
+                                    n = 50, speed = 7
+                                    n = 75, speed = 4
+                                    n = 100, speed = 2
+                               */
+                               switch(n) {
+                                   case 25:
+                                       speed = 10;
+                                       break;
+                                    case 50:
+                                        speed = 7;
+                                        break;
+                                    case 75:
+                                        speed = 4;
+                                        break;
+                                    case 100:
+                                        speed = 2;
+                                        break;
+                               }
+                            }
+                            else if(algo == "selection") {
+                               /*
+                                    n = 25, 50, 75, speed = 100
+                                    n = 100, speed = 70
+                               */
+                                switch(n) {
+                                    case 25:
+                                       speed = 100;
+                                       break;
+                                    case 50:
+                                        speed = 100;
+                                        break;
+                                    case 75:
+                                        speed = 100;
+                                        break;
+                                    case 100:
+                                        speed = 70;
+                                        break;
+                                }
                            }
                            else {
-                               speed = 50;
+                               /*
+                                    n = 25, speed = 50
+                                    n = 50, speed = 25
+                                    n = 75, speed = 13
+                                    n = 100, speed = 5
+                               */
+                               switch(n) {
+                                   case 25:
+                                       speed = 45;
+                                       break;
+                                    case 50:
+                                        speed = 22;
+                                        break;
+                                    case 75:
+                                        speed = 10;
+                                        break;
+                                    case 100:
+                                        speed = 5;
+                                        break;
+                               }
                            }
+
+                           // iterate through the server JSON response where all array states are present.
                             for(var i = 1; i <= Object.keys(data).length; i++) {
+                                // setTimeout to control speed of drawing. data[i] = ith state of array
                                 setTimeout((arr) => {
                                     clear_canvas();
                                     draw(arr);
@@ -89,21 +163,27 @@
                             }
                         }
 
+                        // when server has responded
                         api_call.onreadystatechange = () => {
                             if(api_call.readyState == 4 && api_call.status == 200) {
-                                var data = JSON.parse(api_call.responseText);
-                                fun(data);
+                                var data = JSON.parse(api_call.responseText); // JSONify the data
+                                start(data); // start drawing
                             }
                         };
-                        api_call.open("GET", url, true);
-                        api_call.send();
+                        api_call.open("POST", url, true); // GET request
+                        api_call.send(); // send request
                     }
                 };
             });
         </script>
 
-        <!--JavaScript and CSS files-->
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
+        <style>
+            body {
+                background-color: black;
+                color: white;
+            }
+        </style>
+
     </head>
     <body>
         <div class="container-fluid">
@@ -122,7 +202,7 @@
                 <div class="col">
                     <div class="select-no">
                         <select class="form-control" id="elements" name="elements">
-                            <option hidden value="none">Select number of elements</option>
+                            <option hidden value="none">Select array size</option>
                             <option value="25">25</option>
                             <option value="50">50</option>
                             <option value="75">75</option>
@@ -134,7 +214,7 @@
                     <button type="button" class="btn btn-primary btn-lg" id="perform">Sort!</button>
                 </div>
             </div>
-        <canvas id="mycanvas"></canvas>
+            <canvas id="mycanvas"></canvas>
         </div>
     </body>
 </html>
