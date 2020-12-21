@@ -4,7 +4,7 @@ from flask_session import Session
 from algos.bubblesort import bubblesort
 from algos.selectionsort import selectionsort
 from algos.insertionsort import insertionsort
-#from quicksort import main
+from algos.quicksort import main
 import random
 
 app = Flask(__name__, template_folder="../client/templates")
@@ -27,7 +27,8 @@ def api(algo, n):
         data = insertionsort(arr)
     elif algo == "selection":
         data = selectionsort(arr)
-    print(data)
+    elif algo == "quick":
+        data = main(arr)
     return data
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Sorting Visualiszer</title>
+        <title>Sorting Visualizer</title>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,8 +15,8 @@
 
                 // Load canvas. Set height and width to screen height and width
                 var c = document.querySelector('#mycanvas');
-                c.height = screen.height;
-                c.width = screen.width;
+                c.height = screen.availHeight;
+                c.width = screen.availWidth + 350;
                 var ctx = c.getContext("2d");
 
                 sort_btn = document.getElementById('perform');
@@ -34,8 +34,8 @@
 
                         var algo = document.getElementById("algo").value; // get algo chosen
                         var n = Number(document.getElementById("elements").value); // get array size chosen
-                        alert("Algo chosen : " + algo + "\nArray size : " + n);
                         
+
                         // XHR object
                         var api_call = new XMLHttpRequest();
                         var url = `http://127.0.0.1:5000/${algo}/${n}`;
@@ -55,8 +55,8 @@
                             switch(n) {
                                 case 25: return 30;
                                 case 50: return 15;
-                                case 75: return 9;
-                                case 100: return 8;
+                                case 75: return 10;
+                                case 100: return 7.5;
                             }
                         }
 
@@ -130,7 +130,7 @@
                                         break;
                                 }
                            }
-                           else {
+                           else if(algo == "insertion") {
                                /*
                                     n = 25, speed = 50
                                     n = 50, speed = 25
@@ -152,15 +152,37 @@
                                         break;
                                }
                            }
+                           else {
+                               /*
+                                    n = 25, speed = 100
+                                    n = 50, speed = 50
+                                    n = 75, speed = 35
+                                    n = 100, speed = 30
+                               */
+                               switch(n) {
+                                   case 25:
+                                       speed = 100;
+                                       break;
+                                    case 50:
+                                        speed = 50;
+                                        break;
+                                    case 75:
+                                        speed = 35;
+                                        break;
+                                    case 100:
+                                        speed = 30;
+                                        break;
+                               }
+                           }
 
                            // iterate through the server JSON response where all array states are present.
-                            for(var i = 1; i <= Object.keys(data).length; i++) {
-                                // setTimeout to control speed of drawing. data[i] = ith state of array
+                           key_arr = Object.keys(data);
+                           for(var i = 0; i < key_arr.length; i++) {
                                 setTimeout((arr) => {
                                     clear_canvas();
                                     draw(arr);
-                                }, speed * i, data[i])
-                            }
+                                }, speed * i, data[key_arr[i]])
+                           }
                         }
 
                         // when server has responded
@@ -182,11 +204,18 @@
                 background-color: black;
                 color: white;
             }
+            h5 {
+                text-align: center;
+            }
+            canvas {
+                border: 2px solid whitesmoke;
+            }
         </style>
 
     </head>
     <body>
         <div class="container-fluid">
+            <h5>Visualize different sorting algorithms for arrays of different sizes !</h5>
             <div class="row">
                 <div class="col">
                     <div class="select-algo">
@@ -210,8 +239,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="col text-center">
-                    <button type="button" class="btn btn-primary btn-lg" id="perform">Sort!</button>
+                <div class="col text-left">
+                    <button type="button" class="btn btn-primary btn-md" id="perform">Sort!</button>
                 </div>
             </div>
             <canvas id="mycanvas"></canvas>
