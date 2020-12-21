@@ -31,7 +31,6 @@
                     }
                     else {
                         // if both are chosen
-
                         var algo = document.getElementById("algo").value; // get algo chosen
                         var n = Number(document.getElementById("elements").value); // get array size chosen
                         
@@ -39,6 +38,9 @@
                         // XHR object
                         var api_call = new XMLHttpRequest();
                         var url = `http://127.0.0.1:5000/${algo}/${n}`;
+
+                        var a = document.getElementById("algo");
+                        document.getElementById("function").innerHTML = a.options[a.selectedIndex].text + " on an array of " + n.toString() + " elements";
 
 
                         function draw_settings(x, y, width, height, height_multiplier, color) {
@@ -72,7 +74,9 @@
                                 draw_settings(i, 40, bar_width, arr[i], height_multiplier, "white");
                             }
                             // last two elements of array are the indices that are to be swapped. Color of swapping elements = yellow, red
-                            draw_settings(arr[arr.length - 2], 40, bar_width, arr[arr[arr.length - 2]], height_multiplier, "yellow");
+                            if(algo != "merge") {
+                                draw_settings(arr[arr.length - 2], 40, bar_width, arr[arr[arr.length - 2]], height_multiplier, "yellow");
+                            }
                             draw_settings(arr[arr.length - 1], 40, bar_width, arr[arr[arr.length - 1]], height_multiplier, "red");
                         }
 
@@ -89,12 +93,6 @@
 
                             // set speeds of sorting algos according to array size
                             if(algo == "bubble") {
-                               /*
-                                    n = 25, speed = 10
-                                    n = 50, speed = 7
-                                    n = 75, speed = 4
-                                    n = 100, speed = 2
-                               */
                                switch(n) {
                                    case 25:
                                        speed = 10;
@@ -111,10 +109,6 @@
                                }
                             }
                             else if(algo == "selection") {
-                               /*
-                                    n = 25, 50, 75, speed = 100
-                                    n = 100, speed = 70
-                               */
                                 switch(n) {
                                     case 25:
                                        speed = 100;
@@ -131,34 +125,22 @@
                                 }
                            }
                            else if(algo == "insertion") {
-                               /*
-                                    n = 25, speed = 50
-                                    n = 50, speed = 25
-                                    n = 75, speed = 13
-                                    n = 100, speed = 5
-                               */
                                switch(n) {
                                    case 25:
-                                       speed = 45;
+                                       speed = 35;
                                        break;
                                     case 50:
-                                        speed = 22;
+                                        speed = 17;
                                         break;
                                     case 75:
-                                        speed = 10;
+                                        speed = 8;
                                         break;
                                     case 100:
-                                        speed = 5;
+                                        speed = 4;
                                         break;
                                }
                            }
-                           else {
-                               /*
-                                    n = 25, speed = 100
-                                    n = 50, speed = 50
-                                    n = 75, speed = 35
-                                    n = 100, speed = 30
-                               */
+                           else if(algo == "quick") {
                                switch(n) {
                                    case 25:
                                        speed = 100;
@@ -174,6 +156,38 @@
                                         break;
                                }
                            }
+                           else if(algo == "merge") {
+                              switch(n) {
+                                  case 25:
+                                      speed = 80
+                                      break;
+                                case 50:
+                                    speed = 40;
+                                    break;
+                                case 75:
+                                    speed = 30;
+                                    break;
+                                case 100:
+                                    speed = 20;
+                                    break;
+                              }
+                           }
+                           else { //heap sort
+                                switch(n) {
+                                    case 25:
+                                        speed = 80
+                                        break;
+                                    case 50:
+                                        speed = 40;
+                                        break;
+                                    case 75:
+                                        speed = 30;
+                                        break;
+                                    case 100:
+                                        speed = 20;
+                                        break;
+                                }
+                            }
 
                            // iterate through the server JSON response where all array states are present.
                            key_arr = Object.keys(data);
@@ -210,6 +224,9 @@
             canvas {
                 border: 2px solid whitesmoke;
             }
+            #function {
+                font-weight: bold;
+            }
         </style>
 
     </head>
@@ -225,6 +242,8 @@
                             <option value="selection">Selection Sort</option>
                             <option value="insertion">Insertion Sort</option>
                             <option value="quick">Quick Sort</option>
+                            <option value="merge">Merge Sort</option>
+                            <option value="heap">Heap Sort</option>
                         </select>
                     </div>    
                 </div>
@@ -240,7 +259,8 @@
                     </div>
                 </div>
                 <div class="col text-left">
-                    <button type="button" class="btn btn-primary btn-md" id="perform">Sort!</button>
+                    <button type="button" class="btn btn-primary btn-md" id="perform">Sort!</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span id="function"></span>
                 </div>
             </div>
             <canvas id="mycanvas"></canvas>

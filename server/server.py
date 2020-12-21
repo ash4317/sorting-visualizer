@@ -1,10 +1,12 @@
 import os
-from flask import Flask, session, render_template, request
+from flask import Flask, render_template
 from flask_session import Session
 from algos.bubblesort import bubblesort
 from algos.selectionsort import selectionsort
 from algos.insertionsort import insertionsort
-from algos.quicksort import main
+import algos.quicksort as qs
+import algos.mergesort as ms
+import algos.heapsort as hs
 import random
 
 app = Flask(__name__, template_folder="../client/templates")
@@ -28,7 +30,11 @@ def api(algo, n):
     elif algo == "selection":
         data = selectionsort(arr)
     elif algo == "quick":
-        data = main(arr)
+        data = qs.main(arr)
+    elif algo == "merge":
+        data = ms.main(arr)
+    else:
+        data = hs.main(arr)
     return data
 
 if __name__ == "__main__":
