@@ -59,6 +59,7 @@
                                 case 50: return 15;
                                 case 75: return 10;
                                 case 100: return 7.5;
+                                case 200: return 3.5;
                             }
                         }
 
@@ -106,6 +107,9 @@
                                     case 100:
                                         speed = 2;
                                         break;
+                                    case 200:
+                                        speed = 0.5;
+                                        break;
                                }
                             }
                             else if(algo == "selection") {
@@ -121,6 +125,9 @@
                                         break;
                                     case 100:
                                         speed = 70;
+                                        break;
+                                    case 200:
+                                        speed = 40;
                                         break;
                                 }
                            }
@@ -138,6 +145,9 @@
                                     case 100:
                                         speed = 4;
                                         break;
+                                    case 200:
+                                        speed = 3;
+                                        break;
                                }
                            }
                            else if(algo == "quick") {
@@ -153,6 +163,9 @@
                                         break;
                                     case 100:
                                         speed = 30;
+                                        break;
+                                    case 200:
+                                        speed = 20;
                                         break;
                                }
                            }
@@ -170,6 +183,9 @@
                                 case 100:
                                     speed = 20;
                                     break;
+                                case 200:
+                                    speed = 12;
+                                    break;
                               }
                            }
                            else { //heap sort
@@ -185,6 +201,9 @@
                                         break;
                                     case 100:
                                         speed = 20;
+                                        break;
+                                    case 200:
+                                        speed = 10;
                                         break;
                                 }
                             }
@@ -255,6 +274,7 @@
                             <option value="50">50</option>
                             <option value="75">75</option>
                             <option value="100">100</option>
+                            <option value="200">200</option>
                         </select>
                     </div>
                 </div>
