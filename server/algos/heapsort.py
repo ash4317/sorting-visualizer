@@ -54,7 +54,6 @@ def max_heapify(arr, i, n, res):
         swap(arr, i, j)
         count += 1
         res[count] = [] + arr + [i, j]
-        print(arr)
         max_heapify(arr, j, n, res)
 
 def build_max_heap(arr, n, res):
