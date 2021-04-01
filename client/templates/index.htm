@@ -15,8 +15,8 @@
 
                 // Load canvas. Set height and width to screen height and width
                 var c = document.querySelector('#mycanvas');
-                c.height = screen.availHeight;
-                c.width = screen.availWidth + 350;
+                c.height = screen.availHeight - 220;
+                c.width = screen.availWidth - 50;
                 var ctx = c.getContext("2d");
 
                 sort_btn = document.getElementById('perform');
@@ -55,11 +55,11 @@
                         function get_ht_multiplier(n) {
                             // height multiplier of the bars
                             switch(n) {
-                                case 25: return 30;
-                                case 50: return 15;
-                                case 75: return 10;
-                                case 100: return 7.5;
-                                case 200: return 3.5;
+                                case 25: return 20;
+                                case 50: return 12;
+                                case 75: return 7.5;
+                                case 100: return 5.5;
+                                case 200: return 3;
                             }
                         }
 
