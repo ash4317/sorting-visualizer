@@ -15,7 +15,7 @@ Array sizes - 25, 50, 75, 100, 200
 
 Pick an algorithm, pick an array size and just click sort!
 
-## How to run
+## How to run on yor local machine
 Install flask module in python in order to run this application. After downloading this repository, go to the directory on your PC from Command Prompt or Terminal or Shell, depending on your OS.
 ### For Windows users
 Run the following commands after going to the directory from Command Prompt.<br>
