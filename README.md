@@ -1,6 +1,8 @@
 # Sorting Algorithm Visualizer
 Created this application so as to understand how sorting algorithms work from their visual representation.
 
+## Deployed on http://ash4317.pythonanywhere.com/
+
 Algorithms implemented -
 1. Bubble Sort 
 2. Selection Sort 
