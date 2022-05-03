@@ -1,5 +1,5 @@
 # Sorting Algorithm Visualizer
-Created this application so as to understand how sorting algorithms work from their visual representation.
+A web application that visually demonstrates how different sorting algorithms work.
 
 ## Deployed on http://ash4317.pythonanywhere.com/
 
@@ -13,7 +13,7 @@ Algorithms implemented -
 
 Array sizes - 25, 50, 75, 100, 200
 
-Pick an algorithm, pick an array size and just click sort!
+Pick an algorithm, pick an array size, and just click sort!
 
 ## How to run on your local machine
 Install flask module in python in order to run this application. After downloading this repository, go to the directory on your PC from Command Prompt or Terminal or Shell, depending on your OS.
