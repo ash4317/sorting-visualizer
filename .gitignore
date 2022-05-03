@@ -1,0 +1,4 @@
+/server/__pycache__/
+/server/flask_session/
+/server/algos/__pycache__/
+run.txt

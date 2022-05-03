@@ -35,7 +35,7 @@ def index_of_greater_child(arr, i, n):
         if arr[i] < arr[right_index]:
             return right_index
 
-        return -1 #arr[i] is greatest element. So, already a max heap. Hence, -1
+        return -1 #ar[i] is greatest element. So, already a max heap. Hence, -1
 
     if valid_child(left_index, n):
         #right child not a valid child

@@ -17,7 +17,7 @@ Session(app)
 
 @app.route("/")
 def index():
-    return render_template("index.htm")
+    return render_template("index.html")
 
 @app.route("/<algo>/<n>", methods=["POST"])
 def api(algo, n):
