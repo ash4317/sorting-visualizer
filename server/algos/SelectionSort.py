@@ -11,7 +11,7 @@ def swap(arr, i, j):
     arr[i] = arr[j]
     arr[j] = temp
 
-def selectionsort(arr):
+def selection_sort(arr):
     result = {1 : [] + arr}
     count = 1
     for i in range(len(arr) - 1):

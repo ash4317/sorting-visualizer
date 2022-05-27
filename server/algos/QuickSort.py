@@ -1,5 +1,5 @@
 """
-Quicksort algo is correct but for large array, res last element is not the sorted array
+Quick sort algo is correct but for large array, res last element is not the sorted array
 """
 
 def swap(arr, i, j):
@@ -25,7 +25,7 @@ def partition(arr, start, end, res):
         res[count] = [] + arr + [i + 1, end]
     return i + 1, res
 
-def quicksort(arr, start, end, res):
+def quick_sort(arr, start, end, res):
     if start < end:
         #get pivot index of correctly placed pivot
         pivot_index, res = partition(arr, 0, end, res)
@@ -33,13 +33,13 @@ def quicksort(arr, start, end, res):
         #add array state to result
         
 
-        #call quicksort on left and right sub arrays
-        quicksort(arr, start, pivot_index - 1, res)
-        quicksort(arr, pivot_index + 1, end, res)
+        #call quick_sort on left and right sub arrays
+        quick_sort(arr, start, pivot_index - 1, res)
+        quick_sort(arr, pivot_index + 1, end, res)
 
 def main(arr):
     res = {1 : [] + arr}
-    quicksort(arr, 0, len(arr) - 1, res)
+    quick_sort(arr, 0, len(arr) - 1, res)
     return res
 
 count = 1

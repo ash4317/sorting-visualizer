@@ -37,17 +37,17 @@ def merge(arr, start, end, mid, res):
         count += 1
         res[count] = [] + arr + [k]
 
-def mergesort(arr, start, end, res):
-    """Call mergesort on left and right halves and then merge sorted arrays"""
+def merge_sort(arr, start, end, res):
+    """Call merge sort on left and right halves and then merge sorted arrays"""
     if start < end:
         mid = start + (end - start) // 2
-        mergesort(arr, start, mid, res)
-        mergesort(arr, mid + 1, end, res)
+        merge_sort(arr, start, mid, res)
+        merge_sort(arr, mid + 1, end, res)
         merge(arr, start, end, mid, res)
 
 def main(arr):
     res = {1 : [] + arr}
-    mergesort(arr, 0, len(arr) - 1, res)
+    merge_sort(arr, 0, len(arr) - 1, res)
     return res
 
 count = 1

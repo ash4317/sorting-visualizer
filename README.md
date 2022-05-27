@@ -20,7 +20,7 @@ Install flask module in python in order to run this application. After downloadi
 ### For Windows users
 Run the following commands after going to the directory from Command Prompt.<br>
 ```
-set FLASK_APP=server.py
+set FLASK_APP=app.py
 set FLASK_ENV=development
 flask run
 ```
@@ -28,7 +28,7 @@ Then, open your browser and go to the url `http://127.0.0.1:5000/`
 ### For Linux/MAC users
 Run the following commands after going to the directory from Terminal (for Linux users) or Shell (for MAC users).<br>
 ```
-export FLASK_APP=server.py
+export FLASK_APP=app.py
 export FLASK_ENV=development
 flask run
 ```

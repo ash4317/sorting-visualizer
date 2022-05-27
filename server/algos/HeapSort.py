@@ -62,7 +62,7 @@ def build_max_heap(arr, n, res):
     for i in range((n//2) - 1, -1, -1):
         max_heapify(arr, i, n, res)
 
-def heapsort(arr, n, res):
+def heap_sort(arr, n, res):
     global count
     build_max_heap(arr, n, res) #convert array to max heap
 
@@ -75,7 +75,7 @@ def heapsort(arr, n, res):
 
 def main(arr):
     res = {1 : [] + arr}
-    heapsort(arr, len(arr), res)
+    heap_sort(arr, len(arr), res)
     return res
 
 count = 1

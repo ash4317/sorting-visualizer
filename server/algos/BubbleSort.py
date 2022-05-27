@@ -1,4 +1,4 @@
-def bubblesort(arr):
+def bubble_sort(arr):
 	result = {1 : [] + arr}
 	count = 1
 	for i in range(len(arr)):
