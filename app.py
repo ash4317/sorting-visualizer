@@ -1,4 +1,3 @@
-import os
 from flask import Flask, render_template
 from flask_session import Session
 from algos.BubbleSort import bubble_sort
@@ -9,7 +8,7 @@ import algos.MergeSort as merge_sort
 import algos.HeapSort as heap_sort
 import random
 
-app = Flask(__name__, template_folder="../client/templates", static_folder="../client/static")
+app = Flask(__name__, template_folder="client/templates", static_folder="client/static")
 
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"

@@ -137,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     sortButton.onclick = () => {
-        console.log("Button clicked!");
         const chooseAlgoSelected = Boolean(document.getElementById("algo").value != "none"); // whether algo is chosen
         const chooseNumberSelected = Boolean(document.getElementById("elements").value != "none"); // whether array size is chosen
 
@@ -161,16 +160,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // when server has responded
             apiRequest.onreadystatechange = () => {
-                console.log("API state changed to " + apiRequest.readyState);
                 if(apiRequest.readyState == 4 && apiRequest.status == 200) {
-                    console.log("Got data. Starting to draw canvas");
                     const data = JSON.parse(apiRequest.responseText); // JSONify the data
                     startDrawingCanvas(data, algo, arraySize); // start drawing
                 }
             };
-            console.log("Creating API call");
             apiRequest.open("POST", url, true); // POST request
-            console.log("Making API call");
             apiRequest.send(); // send request
         }
     };
